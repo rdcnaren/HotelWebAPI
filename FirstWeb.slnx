@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="FirstWebApplication/FirstWebApplication.csproj" Id="4dfab9af-a4a5-4422-b357-06eb7053fda9" />
+  <Project Path="FirstWeb_API/FirstWeb_API.csproj" />
+  <Project Path="RoyalHotel.DTO/RoyalHotel.DTO.csproj" Id="23e9cf34-b60c-4979-921a-a8dd693f494f" />
+</Solution>

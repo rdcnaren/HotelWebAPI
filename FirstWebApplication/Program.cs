@@ -1,0 +1,44 @@
+using FirstWebApplication.Services;
+using FirstWebApplication.Services.IServices;
+using RoyalHotel.DTO;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+
+builder.Services.AddHttpClient("HotelWebAPI", client =>
+{
+    var HotelApiUrl = builder.Configuration.GetValue<string>("ServiceUrls:WebApiURL");
+    client.BaseAddress = new Uri(HotelApiUrl);
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
+
+builder.Services.AddScoped<IHotelService,HotelService>();
+
+builder.Services.AddAutoMapper(o =>
+{
+    o.CreateMap<HotelDTO, HotelCreateDTO>().ReverseMap();
+    o.CreateMap<HotelUpdateDTO, HotelDTO>().ReverseMap();
+});
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Home/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.Run();
